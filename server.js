@@ -54,6 +54,9 @@ app.set('trust proxy', 1);
 app.use('/api/partner', express.json({ limit: '6mb' }));
 app.use(express.json({ limit: '10kb' }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
 app.use('/api/otp', rateLimit({ windowMs: 15 * 60e3, max: 30, standardHeaders: true, legacyHeaders: false, message: { error: 'Too many requests. Try again later.' } }));
 
 app.post('/api/otp/send', async (req, res) => {
